@@ -12,19 +12,11 @@ export const countriesAPI = createApi({
   baseQuery,
   reducerPath: 'countries',
   endpoints: (build) => ({
-    getAllCountries: build.query<Country[], any>({
-      query: () => 'all',
-    }),
-    getAllCountriesCount: build.query<number, any>({
-      query: () => 'all',
-      transformResponse: (response: Country[]) => response.length,
+    getCountryByName: build.query<Country, string>({
+      query: (name) => `name/${name}`,
     }),
   }),
 });
 
-export const {
-  useGetAllCountriesCountQuery,
-  useGetAllCountriesQuery,
-  useLazyGetAllCountriesCountQuery,
-  useLazyGetAllCountriesQuery,
-} = countriesAPI;
+export const { useGetCountryByNameQuery, useLazyGetCountryByNameQuery } =
+  countriesAPI;
