@@ -1,12 +1,26 @@
+import { createTheme, MantineProvider } from '@mantine/core';
+import '@mantine/core/styles.css';
 import { StrictMode } from 'react';
 import * as ReactDOM from 'react-dom/client';
-import App from './app/app';
+import { Provider } from 'react-redux';
+import { App } from './app/App';
+import { store } from './app/store';
+import './styles.css';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
+
+const theme = createTheme({
+  /** Put your mantine theme override here */
+});
+
 root.render(
   <StrictMode>
-    <App />
+    <Provider store={store}>
+      <MantineProvider theme={theme}>
+        <App />
+      </MantineProvider>
+    </Provider>
   </StrictMode>
 );

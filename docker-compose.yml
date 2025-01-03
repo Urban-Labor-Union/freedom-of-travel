@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+# NOTE: @usamazansari: This configuration uses only CPU for running the model: https://hub.docker.com/r/ollama/ollama
+#  Docker command: docker run -d -v ollama:/root/.ollama -p 11434:11434 --name ollama ollama/ollama
+  ollama:
+    image: ollama/ollama
+    container_name: ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama:/root/.ollama
+    restart: always
+
+volumes:
+  ollama:
