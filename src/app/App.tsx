@@ -1,31 +1,34 @@
 import { Box, Button, Stack, Text } from '@mantine/core';
 import { useInterval, useShallowEffect } from '@mantine/hooks';
 import * as React from 'react';
-import {  } from '@freedom-of-travel/store';
+import { useLazyGetAllCountriesCountQuery } from '@freedom-of-travel/store';
 
 export function App() {
-  const [seconds, setSeconds] = React.useState(0);
-  const { start, stop, active, toggle } = useInterval(
-    () =>
-      setSeconds((s) => {
-        return s + 1;
-      }),
-    1000
-  );
+  const [count, { data, isSuccess, isError, isLoading, isFetching }] =
+    useLazyGetAllCountriesCountQuery();
 
-  useShallowEffect(() => {
-    start();
-    return stop;
-  }, []);
+  const getCountCallback = React.useCallback(async () => {
+    try {
+      await count({});
+    } catch (error) {
+      console.error(error);
+    }
+  }, [count]);
 
   return (
     <Box className="grid h-screen place-content-center">
       <Stack align="center">
-        <Text>
-          Page loaded <b>{seconds}</b> seconds ago
-        </Text>
-        <Button onClick={toggle} color={active ? 'red' : 'teal'}>
-          {active ? 'Stop' : 'Start'} counting
+        {isLoading || isFetching ? (
+          <Text>Loading...</Text>
+        ) : isError ? (
+          <Text>Unable to get count of countries</Text>
+        ) : isSuccess ? (
+          <Text>
+            There are <b>{data}</b> countries in the world.
+          </Text>
+        ) : null}
+        <Button loading={isLoading || isFetching} onClick={getCountCallback}>
+          Count countries
         </Button>
       </Stack>
     </Box>

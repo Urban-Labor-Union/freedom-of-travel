@@ -1,3 +1,3 @@
-export * from './countries.api';
+export * from './countries';
 export * from './openai.api';
 
