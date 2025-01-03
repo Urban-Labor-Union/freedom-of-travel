@@ -1,6 +1,7 @@
 import { Box, Button, Stack, Text } from '@mantine/core';
 import { useInterval, useShallowEffect } from '@mantine/hooks';
 import * as React from 'react';
+import {  } from '@freedom-of-travel/store';
 
 export function App() {
   const [seconds, setSeconds] = React.useState(0);
