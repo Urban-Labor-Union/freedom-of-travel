@@ -14,7 +14,9 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {},
+    "paths": {
+      "@freedom-of-travel/store": ["src/app/store/index.ts"],
+    },
     "jsx": "react-jsx",
     "allowJs": false,
     "esModuleInterop": false,
