@@ -1,4 +1,4 @@
-import { Button, Group, Text } from '@mantine/core';
+import { Box, Button, Group, Text } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { useShallowEffect } from '@mantine/hooks';
 import type { FormType } from '../types';
@@ -27,7 +27,7 @@ export function Form({
 
   return (
     <form onSubmit={form.onSubmit(onSubmit)}>
-      <Group align="flex-end">
+      <Box miw={450}>
         <CountriesDropdown
           label="I hold passport(s) of"
           onChange={(value) => form.setFieldValue('myPassports', value)}
@@ -48,7 +48,7 @@ export function Form({
           onChange={(value) => form.setFieldValue('destination', value[0])}
         />
         <Button type="submit">Submit</Button>
-      </Group>
+      </Box>
     </form>
   );
 }

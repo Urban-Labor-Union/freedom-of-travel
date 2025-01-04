@@ -1,9 +1,10 @@
 import { useAppSelector, type Country } from '@freedom-of-travel/store';
 import {
-  Avatar,
+  AspectRatio,
+  Box,
   Combobox,
-  Group,
   Highlight,
+  Image,
   Pill,
   PillsInput,
   ScrollArea,
@@ -95,8 +96,16 @@ export function CountriesDropdown({
             key={item.name.common}
             active={selected.includes(item)}
           >
-            <Group gap="sm" wrap="nowrap">
-              <Avatar src={item.flags.svg} alt={item.name.common} />
+            <Box className="grid grid-cols-[70px_1fr]">
+              <AspectRatio ratio={3 / 2}>
+                <Image
+                  maw={60}
+                  mah={40}
+                  radius="md"
+                  src={item.flags.svg}
+                  alt={item.name.common}
+                />
+              </AspectRatio>
               <Stack gap={0}>
                 <Highlight highlight={search} truncate>
                   {item.name.common}
@@ -105,7 +114,7 @@ export function CountriesDropdown({
                   {item.continents.join(', ')}
                 </Text>
               </Stack>
-            </Group>
+            </Box>
           </Combobox.Option>
         )),
     [countries, search, selected, selectedSet]
