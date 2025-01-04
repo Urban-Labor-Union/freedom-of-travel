@@ -20,7 +20,7 @@ const baseQuery = fetchBaseQuery({
 
 export const openAIApi = createApi({
   baseQuery,
-  reducerPath: 'openai',
+  reducerPath: 'openaiAPI',
   // TODO: @usamazansari: Add endpoints here
   endpoints: (build) => ({
     // POST http://localhost:11434/api/generate with body as below

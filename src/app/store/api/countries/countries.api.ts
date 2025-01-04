@@ -10,13 +10,22 @@ const baseQuery = fetchBaseQuery({
 
 export const countriesAPI = createApi({
   baseQuery,
-  reducerPath: 'countries',
+  reducerPath: 'countriesAPI',
   endpoints: (build) => ({
     getCountryByName: build.query<Country, string>({
       query: (name) => `name/${name}`,
     }),
+    getAllCountriesForSelectDropdown: build.query<Country[], void>({
+      query: () => `all?fields=name,cca2,cca3,currencies,maps,flags,continents`,
+      transformResponse: (response: Country[]) =>
+        response.sort((a, b) => a.name.common.localeCompare(b.name.common)),
+    }),
   }),
 });
 
-export const { useGetCountryByNameQuery, useLazyGetCountryByNameQuery } =
-  countriesAPI;
+export const {
+  useGetCountryByNameQuery,
+  useLazyGetCountryByNameQuery,
+  useGetAllCountriesForSelectDropdownQuery,
+  useLazyGetAllCountriesForSelectDropdownQuery,
+} = countriesAPI;

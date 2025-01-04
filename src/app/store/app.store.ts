@@ -4,14 +4,18 @@ import {
   useSelector,
   type TypedUseSelectorHook,
 } from 'react-redux';
-import { countriesAPI, openAIApi } from './api';
+import { countriesAPI, openAIApi, type Country } from './api';
+import { countriesReducer } from './slice';
 
-export type IAppState = object;
+export type IAppState = {
+  countriesSlice: { countries: Country[] };
+};
 
 // NOTE: @usamazansari: Add reducers here
 const combinedReducers = combineReducers({
   [openAIApi.reducerPath]: openAIApi.reducer,
   [countriesAPI.reducerPath]: countriesAPI.reducer,
+  countriesSlice: countriesReducer,
 });
 
 export const store = configureStore({
