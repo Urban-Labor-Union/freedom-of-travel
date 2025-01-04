@@ -7,6 +7,8 @@ import {
   Pill,
   PillsInput,
   ScrollArea,
+  Stack,
+  Text,
   useCombobox,
   type MultiSelectProps,
 } from '@mantine/core';
@@ -18,6 +20,7 @@ export function CountriesDropdown({
   description = 'Please select the country',
   placeholder = 'Search countries',
   withAsterisk = false,
+  value = [],
 }: MultiSelectProps & {
   onChange: (value: string[]) => void;
 }) {
@@ -28,30 +31,25 @@ export function CountriesDropdown({
   });
 
   const [search, setSearch] = React.useState('');
-  const [selected, setSelected] = React.useState<Country[]>([]);
+  const [selected, setSelected] = React.useState<Country[]>(
+    countries.filter((item) => value.includes(item.name.common))
+  );
   const [selectedSet] = React.useState<Set<string>>(
     new Set(selected.map((item) => item.name.common))
   );
 
   const handleValueSelect = React.useCallback(
     (val: string) => {
-      if (selectedSet.has(val)) {
+      const country = countries.find((item) => item.name.common === val);
+      if (country) {
         setSelected((current) => {
-          const s = current.filter((v) => v.name.common !== val);
+          const s = [...current, country];
           onChange(s.map((item) => item.name.common));
           return s;
         });
-      } else {
-        const country = countries.find((item) => item.name.common === val);
-        if (country) {
-          setSelected((current) => {
-            const s = [...current, country];
-            onChange(s.map((item) => item.name.common));
-            return s;
-          });
-        }
-        selectedSet.add(val);
       }
+      selectedSet.add(val);
+      setSearch('');
     },
     [countries, onChange, selectedSet]
   );
@@ -99,9 +97,14 @@ export function CountriesDropdown({
           >
             <Group gap="sm" wrap="nowrap">
               <Avatar src={item.flags.svg} alt={item.name.common} />
-              <Highlight highlight={search} truncate>
-                {item.name.common}
-              </Highlight>
+              <Stack gap={0}>
+                <Highlight highlight={search} truncate>
+                  {item.name.common}
+                </Highlight>
+                <Text c="dimmed" size="xs">
+                  {item.continents.join(', ')}
+                </Text>
+              </Stack>
             </Group>
           </Combobox.Option>
         )),
