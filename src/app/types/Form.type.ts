@@ -1,5 +1,5 @@
 export type FormType = {
-  myPassport: string;
+  myPassports: string[];
   myVisas?: string[];
   destination?: string;
 };

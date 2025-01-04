@@ -1,8 +1,8 @@
-import { Button, Group, MultiSelect, Select, Text } from '@mantine/core';
+import { Button, Group, Text } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { useShallowEffect } from '@mantine/hooks';
-import * as React from 'react';
 import type { FormType } from '../types';
+import { CountriesDropdown } from './common';
 
 export function Form({
   value,
@@ -13,7 +13,7 @@ export function Form({
 }) {
   const form = useForm<FormType>({
     initialValues: {
-      myPassport: '',
+      myPassports: [],
       myVisas: [],
       destination: '',
     },
@@ -28,21 +28,25 @@ export function Form({
   return (
     <form onSubmit={form.onSubmit(onSubmit)}>
       <Group align="flex-end">
-        <MultiSelect
-          searchable
+        <CountriesDropdown
           label="I hold passport(s) of"
+          onChange={(value) => form.setFieldValue('myPassports', value)}
           withAsterisk
-        ></MultiSelect>
-        <MultiSelect
-          searchable
+        />
+        <CountriesDropdown
           label="I hold visa(s) of"
+          onChange={(value) => form.setFieldValue('myVisas', value)}
           description={
             <Text c="dimmed" size="xs">
               Please enter only tourist visa(s) you currently hold
             </Text>
           }
-        ></MultiSelect>
-        <Select searchable label="I want to travel to" withAsterisk></Select>
+        />
+        <CountriesDropdown
+          label="I want to travel to"
+          withAsterisk
+          onChange={(value) => form.setFieldValue('destination', value[0])}
+        />
         <Button type="submit">Submit</Button>
       </Group>
     </form>
