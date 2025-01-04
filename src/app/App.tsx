@@ -1,4 +1,4 @@
-import { Box, LoadingOverlay, Stack, Text } from '@mantine/core';
+import { Box, Loader, LoadingOverlay, Stack, Text } from '@mantine/core';
 import * as React from 'react';
 import { Form } from './components';
 import type { FormType } from './types';
@@ -32,7 +32,17 @@ export function App() {
         <Text>Error initializing app!</Text>
       ) : (
         <Stack align="center" pos="relative">
-          <LoadingOverlay visible={isLoading} />
+          <LoadingOverlay
+            visible={isLoading}
+            loaderProps={{
+              children: (
+                <Stack align="center">
+                  <Loader />
+                  <Text>Initializing</Text>
+                </Stack>
+              ),
+            }}
+          />
           <Form onSubmit={formSubmitCallback}></Form>
         </Stack>
       )}

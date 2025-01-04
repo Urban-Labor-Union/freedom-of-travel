@@ -1,8 +1,9 @@
-import { Box, Button, Group, Text } from '@mantine/core';
+import { Box, Button, Group, Text, ThemeIcon } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { useShallowEffect } from '@mantine/hooks';
 import type { FormType } from '../types';
 import { CountriesDropdown } from './common';
+import { IconSearch } from '@tabler/icons-react';
 
 export function Form({
   value,
@@ -27,7 +28,7 @@ export function Form({
 
   return (
     <form onSubmit={form.onSubmit(onSubmit)}>
-      <Box miw={450}>
+      <Box className="grid justify-center gap-4">
         <CountriesDropdown
           label="I hold passport(s) of"
           onChange={(value) => form.setFieldValue('myPassports', value)}
@@ -47,7 +48,16 @@ export function Form({
           withAsterisk
           onChange={(value) => form.setFieldValue('destination', value[0])}
         />
-        <Button type="submit">Submit</Button>
+        <Button
+          type="submit"
+          leftSection={
+            <ThemeIcon variant="transparent" color="white" size="xs">
+              <IconSearch />
+            </ThemeIcon>
+          }
+        >
+          Explore
+        </Button>
       </Box>
     </form>
   );

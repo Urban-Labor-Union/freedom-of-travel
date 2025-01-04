@@ -10,9 +10,11 @@ import {
   ScrollArea,
   Stack,
   Text,
+  ThemeIcon,
   useCombobox,
   type MultiSelectProps,
 } from '@mantine/core';
+import { IconX } from '@tabler/icons-react';
 import * as React from 'react';
 
 export function CountriesDropdown({
@@ -51,8 +53,9 @@ export function CountriesDropdown({
       }
       selectedSet.add(val);
       setSearch('');
+      combobox.closeDropdown();
     },
-    [countries, onChange, selectedSet]
+    [combobox, countries, onChange, selectedSet]
   );
 
   const handleValueRemove = React.useCallback(
@@ -126,8 +129,31 @@ export function CountriesDropdown({
         <PillsInput
           label={label}
           description={description}
-          onClick={() => combobox.openDropdown()}
+          onClick={() => combobox.toggleDropdown()}
+          miw={450}
           withAsterisk={withAsterisk}
+          rightSection={
+            selected.length > 0 ? (
+              <ThemeIcon
+                variant="transparent"
+                size="sm"
+                color="gray"
+                onClick={() => {
+                  setSelected([]);
+                  setSearch('');
+                  selectedSet.clear();
+                }}
+              >
+                <IconX />
+              </ThemeIcon>
+            ) : (
+              <Combobox.Chevron
+                onClick={() => {
+                  combobox.toggleDropdown();
+                }}
+              />
+            )
+          }
         >
           <Pill.Group>
             {values}
