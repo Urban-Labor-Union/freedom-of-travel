@@ -4,7 +4,7 @@ import {
   useSelector,
   type TypedUseSelectorHook,
 } from 'react-redux';
-import { countriesAPI, openAIApi, type Country } from './api';
+import { countriesAPI, type Country } from './api';
 import { countriesReducer } from './slice';
 
 export type IAppState = {
@@ -13,7 +13,6 @@ export type IAppState = {
 
 // NOTE: @usamazansari: Add reducers here
 const combinedReducers = combineReducers({
-  [openAIApi.reducerPath]: openAIApi.reducer,
   [countriesAPI.reducerPath]: countriesAPI.reducer,
   countriesSlice: countriesReducer,
 });
@@ -22,7 +21,6 @@ export const store = configureStore({
   reducer: combinedReducers,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({}).concat(
-      openAIApi.middleware,
       countriesAPI.middleware
     ),
 });
