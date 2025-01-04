@@ -1,9 +1,9 @@
 import { type PayloadAction, createSlice } from '@reduxjs/toolkit';
 import type { IAppState } from '../app.store';
 
-type ICountriesState = IAppState['countries'];
+type ICountriesState = IAppState['countriesSlice'];
 
-const initialState: ICountriesState = [];
+const initialState: ICountriesState = { countries: [] };
 
 const reducers = {
   /**
@@ -14,9 +14,9 @@ const reducers = {
    */
   setCountries: (
     state: ICountriesState,
-    action: PayloadAction<ICountriesState>
+    action: PayloadAction<ICountriesState['countries']>
   ) => {
-    state = action.payload;
+    state.countries = action.payload;
   },
 };
 

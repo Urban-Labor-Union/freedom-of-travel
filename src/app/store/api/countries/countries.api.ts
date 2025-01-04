@@ -17,6 +17,8 @@ export const countriesAPI = createApi({
     }),
     getAllCountriesForSelectDropdown: build.query<Country[], void>({
       query: () => `all?fields=name,cca2,cca3,currencies,maps,flags,continents`,
+      transformResponse: (response: Country[]) =>
+        response.sort((a, b) => a.name.common.localeCompare(b.name.common)),
     }),
   }),
 });
