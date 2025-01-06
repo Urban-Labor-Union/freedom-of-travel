@@ -1,24 +1,43 @@
 import { Box, Loader, LoadingOverlay, Stack, Text } from '@mantine/core';
 import * as React from 'react';
 import { Form } from './components';
-import type { FormType } from './types';
+import type { AppFormType } from './types';
 import {
   useAppDispatch,
   useGetAllCountriesForSelectDropdownQuery,
 } from './store';
 import { setCountries } from './store/slice';
+import { useOpenAIChatCompletionsCreate } from './helpers';
 
 export function App() {
   const dispatch = useAppDispatch();
   const {
     data: countriesData,
-    isError,
-    isLoading,
+    isError: countriesError,
+    isLoading: countriesLoading,
   } = useGetAllCountriesForSelectDropdownQuery();
 
-  const formSubmitCallback = React.useCallback((value: FormType) => {
-    console.log(value);
-  }, []);
+  const [
+    createChatCompletion,
+    {
+      data: aiResponse,
+      isLoading: aiLoading,
+      isSuccess: aiSuccess,
+      isError: aiError,
+      error: aiResponseError,
+    },
+  ] = useOpenAIChatCompletionsCreate();
+
+  const formSubmitCallback = React.useCallback(
+    async (value: AppFormType) => {
+      try {
+        await createChatCompletion(value);
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    [createChatCompletion]
+  );
 
   React.useEffect(() => {
     if (countriesData) {
@@ -28,12 +47,12 @@ export function App() {
 
   return (
     <Box className="grid h-screen place-content-center">
-      {isError ? (
+      {countriesError ? (
         <Text>Error initializing app!</Text>
       ) : (
         <Stack align="center" pos="relative">
           <LoadingOverlay
-            visible={isLoading}
+            visible={countriesLoading}
             loaderProps={{
               children: (
                 <Stack align="center">
@@ -44,6 +63,16 @@ export function App() {
             }}
           />
           <Form onSubmit={formSubmitCallback}></Form>
+          {aiLoading ? (
+            <Text>Thinking...</Text>
+          ) : aiError ? (
+            <Stack>
+              <Text>Error thinking!</Text>
+              <Text>{(aiResponseError as { message: string })?.message}</Text>
+            </Stack>
+          ) : aiSuccess ? (
+            aiResponse && <Text>{JSON.stringify(aiResponse)}</Text>
+          ) : null}
         </Stack>
       )}
     </Box>
