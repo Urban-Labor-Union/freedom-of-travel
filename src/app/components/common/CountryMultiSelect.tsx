@@ -129,7 +129,7 @@ export function CountriesDropdown({
         <PillsInput
           label={label}
           description={description}
-          onClick={() => combobox.toggleDropdown()}
+          onClick={() => combobox.openDropdown()}
           miw={450}
           withAsterisk={withAsterisk}
           rightSection={
