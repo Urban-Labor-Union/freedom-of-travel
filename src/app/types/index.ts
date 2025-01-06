@@ -1,1 +1,2 @@
-export * from './Form.type';
+export * from './form.type';
+export * from './response.types';

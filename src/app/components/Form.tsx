@@ -1,7 +1,7 @@
 import { Box, Button, Group, Text, ThemeIcon } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { useShallowEffect } from '@mantine/hooks';
-import type { FormType } from '../types';
+import type { AppFormType } from '../types';
 import { CountriesDropdown } from './common';
 import { IconSearch } from '@tabler/icons-react';
 
@@ -9,10 +9,10 @@ export function Form({
   value,
   onSubmit,
 }: {
-  value?: FormType;
-  onSubmit: (value: FormType) => void;
+  value?: AppFormType;
+  onSubmit: (value: AppFormType) => void;
 }) {
-  const form = useForm<FormType>({
+  const form = useForm<AppFormType>({
     initialValues: {
       myPassports: [],
       myVisas: [],
