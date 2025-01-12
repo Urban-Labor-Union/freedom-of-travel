@@ -1,9 +1,9 @@
-import { Box, Button, Group, Text, ThemeIcon } from '@mantine/core';
+import { Box, Button, Text } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { useShallowEffect } from '@mantine/hooks';
+import { IconSearch } from '@tabler/icons-react';
 import type { AppFormType } from '../types';
 import { CountriesDropdown } from './common';
-import { IconSearch } from '@tabler/icons-react';
 
 export function Form({
   value,
@@ -48,14 +48,7 @@ export function Form({
           withAsterisk
           onChange={(value) => form.setFieldValue('destination', value[0])}
         />
-        <Button
-          type="submit"
-          leftSection={
-            <ThemeIcon variant="transparent" color="white" size="xs">
-              <IconSearch />
-            </ThemeIcon>
-          }
-        >
+        <Button type="submit" leftSection={<IconSearch size={16} />}>
           Explore
         </Button>
       </Box>

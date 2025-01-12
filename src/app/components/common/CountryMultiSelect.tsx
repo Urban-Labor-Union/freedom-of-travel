@@ -2,6 +2,7 @@ import { useAppSelector, type Country } from '@freedom-of-travel/store';
 import {
   AspectRatio,
   Box,
+  CloseButton,
   Combobox,
   Highlight,
   Image,
@@ -134,18 +135,14 @@ export function CountriesDropdown({
           withAsterisk={withAsterisk}
           rightSection={
             selected.length > 0 ? (
-              <ThemeIcon
+              <CloseButton
                 variant="transparent"
-                size="sm"
-                color="gray"
                 onClick={() => {
                   setSelected([]);
                   setSearch('');
                   selectedSet.clear();
                 }}
-              >
-                <IconX />
-              </ThemeIcon>
+              />
             ) : (
               <Combobox.Chevron
                 onClick={() => {
